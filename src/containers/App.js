@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import Cardlist from "./Cardlist";
-import SearchBox from "./SearchBox";
+import Cardlist from "../components/Cardlist";
+import SearchBox from "../components/SearchBox";
 import "./App.css"
-import Scroll from "./Scroll"
+import Scroll from "../components/Scroll"
 
 
 class App extends Component {
@@ -29,11 +29,12 @@ class App extends Component {
     }
 
     render() {
-        const filterArray = this.state.monsters.filter(item => {
-            return item.name.toLowerCase().includes(this.state.searchfield.toLowerCase())         
+        const {monsters, searchfield} = this.state;
+        const filterArray = monsters.filter(item => {
+            return item.name.toLowerCase().includes(searchfield.toLowerCase())         
         });
-
-        if (this.state.monsters.length === 0) {
+        //If we have a big array (monsters) and it takes longer to load it render Loading
+        if (!monsters.length) {
             return <h1>Loading</h1>
         }
         else {
@@ -41,7 +42,7 @@ class App extends Component {
                 <div className="tc">
                     <h1 className="f1">Robots</h1>
                     <SearchBox searchChange={this.onSearchChange}/>
-                    <Scroll style={{overflow: 'scroll', border: '5px solid black', height: "400px"}}>
+                    <Scroll >
                         <Cardlist monsters={ filterArray }/>
                     </Scroll>
                 </div>
